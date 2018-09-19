@@ -26,7 +26,7 @@ botao.addEventListener("click", function(evento){
         return false;
     } else if(inputEmail.value !== inputEmailConfirmacao.value){
         alert("Os emails precisam ser iguais!");
-    } else if(inputSenha.value.length < 6){
+    } else if(inputSenha.value.length <= 6){
         alert("A senha precisa ter 7 caracteres")
     } else if (inputSenha.value !== inputSenhaConfirmacao.value){
         alert("As senhas precisam ser iguais!");
@@ -35,20 +35,6 @@ botao.addEventListener("click", function(evento){
         return false;
     } else if(inputNews.checked === false){
         alert("É uma pena que você não deseja receber nosso conteúdo exclusivo")
-    }
-
-// 6 - O fundo muda de cor de acordo com a área
-    const optionSelect = inputArea.options
-    [inputArea.selectedIndex] 
-
-    if(optionSelect.value === "Front-End"){
-        document.querySelector("body").style.backgroundColor = "blue";
-    } else if(optionSelect.value === "Back-End"){
-        document.querySelector("body").style.backgroundColor = "green";
-    } else if(optionSelect.value === "UX Designer"){
-        document.querySelector("body").style.backgroundColor = "pink";
-    } else if(optionSelect.value === "UI Designer"){
-        document.querySelector("body").style.backgroundColor = "orange";  
     }
     
 // 7 - dependando do nível escreve no console 
@@ -65,5 +51,28 @@ botao.addEventListener("click", function(evento){
         console.log("2 - 5 anos de experiência")
     } else if(radioItem.value === "Senior"){
         console.log("5+ anos de experiência")
-    }   
+    }  
+    
+    document.querySelector("body").style.brackgroundColor = "#fff"
+    this.closest("form").submit();
+})
+
+// 6 - O fundo muda de cor de acordo com a área
+
+inputArea.addEventListener("change", function(){
+
+    if(inputArea.selectedIndex === 0){
+        document.querySelector("body").style.backgroundColor = "#e3f2fd";
+    }else if(inputArea.selectedIndex === 1){
+        document.querySelector("body").style.backgroundColor = "#f1f8e9";
+    } else if(inputArea.selectedIndex === 2){
+        document.querySelector("body").style.backgroundColor = "#fce4ec";
+    } else if(inputArea.selectedIndex === 3){
+        document.querySelector("body").style.backgroundColor = "#ffecb3";  
+}
+})
+
+inputEmailConfirmacao.addEventListener("paste", function(evento){
+    evento.preventDefault();
+    return false;
 })
