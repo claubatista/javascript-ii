@@ -1,40 +1,53 @@
-const buttonCreateTweet = document.querySelector(".tweet-composer__button")
-const tweetsTimeline = document.querySelector(".tweets-timeline")
-const inputTweet = document.getElementById("tweetComposerInput")
-const buttonDeleteTweet = document.querySelectorAll(".tweets-timeline__delete-button");
+const botao = document.querySelector(".tweet-composer__button");
+const inputTweet = document.getElementById("tweetComposerInput");
+const timeline = document.querySelector(".tweets-timeline");
 
-buttonCreateTweet.addEventListener("click", function(e){
-    e.preventDefault()
-    
-    const newTweetBox = document.createElement("div")
-    newTweetBox.className = "tweets-timeline__box";
-    const date = new Date();
-    const month = date.toLocaleString("pt-br", { month: "short" });
-    const day = date.getUTCDate();
 
-    newTweetBox.innerHTML = 
-    `<div class="tweets-timeline__header">\
-        <span class="tweets-timeline__name">Isabelle Galvão</span>\
-        <span class="tweets-timeline__username">@galvaoiisabelle</span>\
-        <span class="tweets-timeline__date">${day} de ${month}</span>\
-    </div>\
-    <p class="tweets-timeline__tweet">\
-        ${inputTweet.value}\
-    </p>\
-    <div class="tweets-timeline__footer">\
-        <button class="tweets-timeline__delete-button button">Excluir</button>\
-    </div>`;
+botao.addEventListener("click", function(evento){
+    evento.preventDefault();
 
-    tweetsTimeline.insertBefore(newTweetBox, tweetsTimeline.childNodes[0]);
+    const caixaTweet = document.createElement("div");
+    caixaTweet.classList.add("tweets-timeline__box");
+
+    if(inputTweet.value === undefined || inputTweet.value === null || inputTweet.value === "" || inputTweet.value === " "){
+        inputTweet.focus();
+        return false;
+    }  
+
+    const header = document.createElement("div");
+    header.className = "tweets-timeline__header";
+    header.innerHTML = `
+    <span class="tweets-timeline__name">clau</span>
+    <span class="tweets-timeline__username">@bbdesro</span>
+    <span class="tweets-timeline__date">${new Date()}</span>`
+
+    const novoTweet = document.createElement("p");
+    novoTweet.innerHTML = inputTweet.value;
+
+    const footer = document.createElement("div");
+    header.className = "tweets-timeline__footer"
+    footer.innerHTML = `
+    <div class="tweets-timeline__footer">
+    <button class="tweets-timeline__delete-button button">Excluir</button></div>`
+
+    // ${novoTweet.removeChild(novoTweet)}
+
+    caixaTweet.appendChild(novoTweet);
+    caixaTweet.appendChild(header);
+    caixaTweet.appendChild(novoTweet);
+    caixaTweet.appendChild(footer);
+
+    //div na timeline
+    timeline.insertBefore(caixaTweet, timeline.childNodes[0]);
+
+    inputTweet.value = null;
+
+    //botao excluir
+    const botaoExcluir = document.querySelector(".tweets-timeline__delete-button");
+
+    botaoExcluir.addEventListener("click", function(evento){
+    evento.preventDefault();
+    caixaTweet.remove();
 })
 
-for (let i = 0; i < buttonDeleteTweet.length; i++) {
-    buttonDeleteTweet[i].addEventListener("click", function(e){
-        console.log("click",e.target.className);
-        if(e.target && e.target.className == 'button'){
-            const tweet = this.closest(".tweets-timeline__box");
-            tweet.parentNode.removeChild(tweet);
-        }    
-    })
-}
-
+})
