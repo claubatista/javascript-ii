@@ -6,6 +6,10 @@ const timeline = document.querySelector(".tweets-timeline");
 botao.addEventListener("click", function(evento){
     evento.preventDefault();
 
+    const data = new Date();
+    const mes = data.toLocaleDateString("pt-br",{ month: "short"});
+    const dia = data.getDate();
+
     const caixaTweet = document.createElement("div");
     caixaTweet.classList.add("tweets-timeline__box");
 
@@ -19,7 +23,7 @@ botao.addEventListener("click", function(evento){
     header.innerHTML = `
     <span class="tweets-timeline__name">clau</span>
     <span class="tweets-timeline__username">@bbdesro</span>
-    <span class="tweets-timeline__date">${new Date()}</span>`
+    <span class="tweets-timeline__date">${dia} de ${mes}</span>`
 
     const novoTweet = document.createElement("p");
     novoTweet.innerHTML = inputTweet.value;
@@ -29,8 +33,6 @@ botao.addEventListener("click", function(evento){
     footer.innerHTML = `
     <div class="tweets-timeline__footer">
     <button class="tweets-timeline__delete-button button">Excluir</button></div>`
-
-    // ${novoTweet.removeChild(novoTweet)}
 
     caixaTweet.appendChild(novoTweet);
     caixaTweet.appendChild(header);
@@ -50,4 +52,24 @@ botao.addEventListener("click", function(evento){
     caixaTweet.remove();
 })
 
+})
+
+inputTweet.addEventListener("keyup", function(){
+    const textBox = this;
+    const maxLength = 280;
+    const contador = document.getElementById("tweetComposerCounter");
+    
+    const minimoDeCaracteres = maxLength - textBox.value.length;
+
+    contador.innerHTML = minimoDeCaracteres;
+    
+    if(minimoDeCaracteres <= 15 && minimoDeCaracteres >= 0){
+        contador.style.color = "red";
+    }else if(minimoDeCaracteres < 0){
+        botao.disabled = true;
+        contador.style.color = "red";
+    }else{
+        contador.style.color = "white";
+        botao.disabled = false;
+    }
 })
